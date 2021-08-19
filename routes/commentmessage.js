@@ -138,4 +138,31 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  let data = req.body;
+  let postData = await CommentModel.find({ postId: data.id });
+  postData.map((post) => {
+    post.comments.map((comment) => {
+      if (comment.messageId === data.commentId) {
+        let resData = {
+          messageId: comment.messageId,
+          from: comment.from.fromId,
+          message: comment.message,
+          timestamp: Date.now(),
+        };
+        res.send(resData);
+      }
+    });
+  });
+});
+
+router.post("/reply", async (req, res) => {
+  let data = req.body;
+  console.log(data);
+  let response = await axios.post(
+    `https://www.graph.facebook.com/${data.postId}?message="${data.message}, @[${data.userid}]"&access_token=${PAGE_ACCESS_TOKEN}`
+  );
+  console.log(response);
+});
+
 module.exports = router;
