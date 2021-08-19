@@ -112,12 +112,7 @@ function handlePostback(sender_psid, received_postback) {
 async function getProfileDetails(sender_psid) {
   try {
     let response = await axios.get(
-      `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic`,
-      {
-        params: {
-          access_token: PAGE_ACCESS_TOKEN,
-        },
-      }
+      `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`
     );
     return response.data;
   } catch (e) {

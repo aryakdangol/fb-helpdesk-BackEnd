@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config();
 const webhookRouter = require("./routes/webhooks");
 const userRouter = require("./routes/usermessage");
+const commentRouter = require("./routes/commentmessage");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/userMessage", userRouter);
+app.use("/userComments", commentRouter);
 
 app.listen(process.env.PORT || 5000);
 
